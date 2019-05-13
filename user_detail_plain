@@ -1,0 +1,1004 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 11.1
+-- Dumped by pg_dump version 11.1
+
+-- Started on 2019-05-13 12:35:52
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 2 (class 3079 OID 24980)
+-- Name: uuid-ossp; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA public;
+
+
+--
+-- TOC entry 2986 (class 0 OID 0)
+-- Dependencies: 2
+-- Name: EXTENSION "uuid-ossp"; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION "uuid-ossp" IS 'generate universally unique identifiers (UUIDs)';
+
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 218 (class 1259 OID 25220)
+-- Name: approval_rejection_reasons; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.approval_rejection_reasons (
+    approval_rejection_reason_id integer NOT NULL,
+    approval_rejection_reason_uuid uuid DEFAULT public.uuid_generate_v4(),
+    approval_rejection_reason text,
+    email text,
+    approval_rejection_reason_status integer,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE public.approval_rejection_reasons OWNER TO postgres;
+
+--
+-- TOC entry 217 (class 1259 OID 25218)
+-- Name: approval_rejection_reasons_approval_rejection_reason_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.approval_rejection_reasons_approval_rejection_reason_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.approval_rejection_reasons_approval_rejection_reason_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2987 (class 0 OID 0)
+-- Dependencies: 217
+-- Name: approval_rejection_reasons_approval_rejection_reason_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.approval_rejection_reasons_approval_rejection_reason_id_seq OWNED BY public.approval_rejection_reasons.approval_rejection_reason_id;
+
+
+--
+-- TOC entry 197 (class 1259 OID 24991)
+-- Name: category; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.category (
+    category_id integer NOT NULL,
+    category_uuid uuid DEFAULT public.uuid_generate_v4(),
+    category_name character varying,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    status integer,
+    user_uuid uuid
+);
+
+
+ALTER TABLE public.category OWNER TO postgres;
+
+--
+-- TOC entry 198 (class 1259 OID 24998)
+-- Name: category_category_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.category_category_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.category_category_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2988 (class 0 OID 0)
+-- Dependencies: 198
+-- Name: category_category_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.category_category_id_seq OWNED BY public.category.category_id;
+
+
+--
+-- TOC entry 199 (class 1259 OID 25000)
+-- Name: city; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.city (
+    city_id integer NOT NULL,
+    city_uuid uuid DEFAULT public.uuid_generate_v4(),
+    country_uuid uuid,
+    city character varying
+);
+
+
+ALTER TABLE public.city OWNER TO postgres;
+
+--
+-- TOC entry 200 (class 1259 OID 25007)
+-- Name: city_city_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.city_city_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.city_city_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2989 (class 0 OID 0)
+-- Dependencies: 200
+-- Name: city_city_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.city_city_id_seq OWNED BY public.city.city_id;
+
+
+--
+-- TOC entry 201 (class 1259 OID 25009)
+-- Name: country; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.country (
+    country_id integer NOT NULL,
+    country_uuid uuid DEFAULT public.uuid_generate_v4(),
+    country character varying
+);
+
+
+ALTER TABLE public.country OWNER TO postgres;
+
+--
+-- TOC entry 214 (class 1259 OID 25175)
+-- Name: country_code; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.country_code (
+    country_code_id integer NOT NULL,
+    country_code_uuid uuid DEFAULT public.uuid_generate_v4(),
+    country_code integer,
+    country text
+);
+
+
+ALTER TABLE public.country_code OWNER TO postgres;
+
+--
+-- TOC entry 213 (class 1259 OID 25173)
+-- Name: country_code_country_code_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.country_code_country_code_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.country_code_country_code_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2990 (class 0 OID 0)
+-- Dependencies: 213
+-- Name: country_code_country_code_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.country_code_country_code_id_seq OWNED BY public.country_code.country_code_id;
+
+
+--
+-- TOC entry 202 (class 1259 OID 25016)
+-- Name: country_country_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.country_country_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.country_country_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2991 (class 0 OID 0)
+-- Dependencies: 202
+-- Name: country_country_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.country_country_id_seq OWNED BY public.country.country_id;
+
+
+--
+-- TOC entry 216 (class 1259 OID 25201)
+-- Name: image_status; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.image_status (
+    image_status_id integer NOT NULL,
+    image_status_uuid uuid DEFAULT public.uuid_generate_v4(),
+    email text,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    image_path text,
+    image_status integer
+);
+
+
+ALTER TABLE public.image_status OWNER TO postgres;
+
+--
+-- TOC entry 215 (class 1259 OID 25199)
+-- Name: image_status_image_status_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.image_status_image_status_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.image_status_image_status_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2992 (class 0 OID 0)
+-- Dependencies: 215
+-- Name: image_status_image_status_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.image_status_image_status_id_seq OWNED BY public.image_status.image_status_id;
+
+
+--
+-- TOC entry 203 (class 1259 OID 25018)
+-- Name: interests; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.interests (
+    interest_id integer NOT NULL,
+    interest_uuid uuid DEFAULT public.uuid_generate_v4(),
+    interest_name character varying,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE public.interests OWNER TO postgres;
+
+--
+-- TOC entry 204 (class 1259 OID 25025)
+-- Name: interests_interest_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.interests_interest_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.interests_interest_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2993 (class 0 OID 0)
+-- Dependencies: 204
+-- Name: interests_interest_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.interests_interest_id_seq OWNED BY public.interests.interest_id;
+
+
+--
+-- TOC entry 205 (class 1259 OID 25027)
+-- Name: profile; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.profile (
+    profile_id integer NOT NULL,
+    profile_uuid uuid DEFAULT public.uuid_generate_v4(),
+    image_path text,
+    video_path text,
+    first_name character varying,
+    last_name character varying,
+    country_uuid uuid,
+    city_uuid uuid,
+    primary_email character varying,
+    secondary_email character varying,
+    primary_number character varying,
+    secondary_number character varying,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    primary_number_country_code_uuid uuid,
+    secondary_number_country_code_uuid uuid
+);
+
+
+ALTER TABLE public.profile OWNER TO postgres;
+
+--
+-- TOC entry 206 (class 1259 OID 25034)
+-- Name: profil_profile_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.profil_profile_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.profil_profile_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2994 (class 0 OID 0)
+-- Dependencies: 206
+-- Name: profil_profile_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.profil_profile_id_seq OWNED BY public.profile.profile_id;
+
+
+--
+-- TOC entry 207 (class 1259 OID 25042)
+-- Name: profile_skills; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.profile_skills (
+    profile_skill_id integer NOT NULL,
+    profile_skill_uuid uuid DEFAULT public.uuid_generate_v4(),
+    user_uuid uuid,
+    category_position integer,
+    category_uuid uuid,
+    skill_position integer,
+    skill_uuid uuid,
+    skill_experience numeric,
+    skill_self_interest numeric,
+    skill_self_rating numeric,
+    skill_comment text,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE public.profile_skills OWNER TO postgres;
+
+--
+-- TOC entry 208 (class 1259 OID 25049)
+-- Name: profile_skills_profile_skill_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.profile_skills_profile_skill_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.profile_skills_profile_skill_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2995 (class 0 OID 0)
+-- Dependencies: 208
+-- Name: profile_skills_profile_skill_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.profile_skills_profile_skill_id_seq OWNED BY public.profile_skills.profile_skill_id;
+
+
+--
+-- TOC entry 209 (class 1259 OID 25051)
+-- Name: skills; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.skills (
+    skill_id integer NOT NULL,
+    skill_uuid uuid DEFAULT public.uuid_generate_v4(),
+    skill_name character varying,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    status integer,
+    user_uuid uuid
+);
+
+
+ALTER TABLE public.skills OWNER TO postgres;
+
+--
+-- TOC entry 210 (class 1259 OID 25058)
+-- Name: skills_skill_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.skills_skill_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.skills_skill_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2996 (class 0 OID 0)
+-- Dependencies: 210
+-- Name: skills_skill_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.skills_skill_id_seq OWNED BY public.skills.skill_id;
+
+
+--
+-- TOC entry 211 (class 1259 OID 25060)
+-- Name: users; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.users (
+    user_id integer NOT NULL,
+    user_uuid uuid DEFAULT public.uuid_generate_v4(),
+    login_id character varying,
+    pass_word character varying,
+    created_at timestamp without time zone,
+    last_login timestamp without time zone,
+    updated_at timestamp without time zone,
+    roles integer,
+    login_id_status integer
+);
+
+
+ALTER TABLE public.users OWNER TO postgres;
+
+--
+-- TOC entry 220 (class 1259 OID 25239)
+-- Name: users_interests; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.users_interests (
+    users_interests_id integer NOT NULL,
+    users_interests_uuid uuid DEFAULT public.uuid_generate_v4(),
+    interest_uuid uuid,
+    user_uuid uuid,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE public.users_interests OWNER TO postgres;
+
+--
+-- TOC entry 219 (class 1259 OID 25237)
+-- Name: users_interests_users_interests_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.users_interests_users_interests_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_interests_users_interests_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2997 (class 0 OID 0)
+-- Dependencies: 219
+-- Name: users_interests_users_interests_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.users_interests_users_interests_id_seq OWNED BY public.users_interests.users_interests_id;
+
+
+--
+-- TOC entry 212 (class 1259 OID 25067)
+-- Name: users_users_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.users_users_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_users_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2998 (class 0 OID 0)
+-- Dependencies: 212
+-- Name: users_users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.users_users_id_seq OWNED BY public.users.user_id;
+
+
+--
+-- TOC entry 2793 (class 2604 OID 25223)
+-- Name: approval_rejection_reasons approval_rejection_reason_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.approval_rejection_reasons ALTER COLUMN approval_rejection_reason_id SET DEFAULT nextval('public.approval_rejection_reasons_approval_rejection_reason_id_seq'::regclass);
+
+
+--
+-- TOC entry 2774 (class 2604 OID 25069)
+-- Name: category category_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.category ALTER COLUMN category_id SET DEFAULT nextval('public.category_category_id_seq'::regclass);
+
+
+--
+-- TOC entry 2776 (class 2604 OID 25070)
+-- Name: city city_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.city ALTER COLUMN city_id SET DEFAULT nextval('public.city_city_id_seq'::regclass);
+
+
+--
+-- TOC entry 2778 (class 2604 OID 25071)
+-- Name: country country_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.country ALTER COLUMN country_id SET DEFAULT nextval('public.country_country_id_seq'::regclass);
+
+
+--
+-- TOC entry 2789 (class 2604 OID 25178)
+-- Name: country_code country_code_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.country_code ALTER COLUMN country_code_id SET DEFAULT nextval('public.country_code_country_code_id_seq'::regclass);
+
+
+--
+-- TOC entry 2791 (class 2604 OID 25204)
+-- Name: image_status image_status_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.image_status ALTER COLUMN image_status_id SET DEFAULT nextval('public.image_status_image_status_id_seq'::regclass);
+
+
+--
+-- TOC entry 2780 (class 2604 OID 25072)
+-- Name: interests interest_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.interests ALTER COLUMN interest_id SET DEFAULT nextval('public.interests_interest_id_seq'::regclass);
+
+
+--
+-- TOC entry 2782 (class 2604 OID 25073)
+-- Name: profile profile_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.profile ALTER COLUMN profile_id SET DEFAULT nextval('public.profil_profile_id_seq'::regclass);
+
+
+--
+-- TOC entry 2784 (class 2604 OID 25075)
+-- Name: profile_skills profile_skill_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.profile_skills ALTER COLUMN profile_skill_id SET DEFAULT nextval('public.profile_skills_profile_skill_id_seq'::regclass);
+
+
+--
+-- TOC entry 2786 (class 2604 OID 25076)
+-- Name: skills skill_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.skills ALTER COLUMN skill_id SET DEFAULT nextval('public.skills_skill_id_seq'::regclass);
+
+
+--
+-- TOC entry 2788 (class 2604 OID 25077)
+-- Name: users user_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users ALTER COLUMN user_id SET DEFAULT nextval('public.users_users_id_seq'::regclass);
+
+
+--
+-- TOC entry 2795 (class 2604 OID 25242)
+-- Name: users_interests users_interests_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users_interests ALTER COLUMN users_interests_id SET DEFAULT nextval('public.users_interests_users_interests_id_seq'::regclass);
+
+
+--
+-- TOC entry 2840 (class 2606 OID 25231)
+-- Name: approval_rejection_reasons approval_rejection_reasons_approval_rejection_reason_uuid_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.approval_rejection_reasons
+    ADD CONSTRAINT approval_rejection_reasons_approval_rejection_reason_uuid_key UNIQUE (approval_rejection_reason_uuid);
+
+
+--
+-- TOC entry 2842 (class 2606 OID 25229)
+-- Name: approval_rejection_reasons approval_rejection_reasons_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.approval_rejection_reasons
+    ADD CONSTRAINT approval_rejection_reasons_pkey PRIMARY KEY (approval_rejection_reason_id);
+
+
+--
+-- TOC entry 2798 (class 2606 OID 25079)
+-- Name: category category_category_uuid_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.category
+    ADD CONSTRAINT category_category_uuid_key UNIQUE (category_uuid);
+
+
+--
+-- TOC entry 2800 (class 2606 OID 25081)
+-- Name: category category_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.category
+    ADD CONSTRAINT category_pkey PRIMARY KEY (category_id);
+
+
+--
+-- TOC entry 2802 (class 2606 OID 25083)
+-- Name: city city_city_uuid_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.city
+    ADD CONSTRAINT city_city_uuid_key UNIQUE (city_uuid);
+
+
+--
+-- TOC entry 2804 (class 2606 OID 25085)
+-- Name: city city_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.city
+    ADD CONSTRAINT city_pkey PRIMARY KEY (city_id);
+
+
+--
+-- TOC entry 2832 (class 2606 OID 25184)
+-- Name: country_code country_code_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.country_code
+    ADD CONSTRAINT country_code_pkey PRIMARY KEY (country_code_id);
+
+
+--
+-- TOC entry 2834 (class 2606 OID 25188)
+-- Name: country_code country_code_uuid; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.country_code
+    ADD CONSTRAINT country_code_uuid UNIQUE (country_code_uuid);
+
+
+--
+-- TOC entry 2806 (class 2606 OID 25087)
+-- Name: country country_country_uuid_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.country
+    ADD CONSTRAINT country_country_uuid_key UNIQUE (country_uuid);
+
+
+--
+-- TOC entry 2808 (class 2606 OID 25089)
+-- Name: country country_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.country
+    ADD CONSTRAINT country_pkey PRIMARY KEY (country_id);
+
+
+--
+-- TOC entry 2836 (class 2606 OID 25212)
+-- Name: image_status image_status_image_status_uuid_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.image_status
+    ADD CONSTRAINT image_status_image_status_uuid_key UNIQUE (image_status_uuid);
+
+
+--
+-- TOC entry 2838 (class 2606 OID 25210)
+-- Name: image_status image_status_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.image_status
+    ADD CONSTRAINT image_status_pkey PRIMARY KEY (image_status_id);
+
+
+--
+-- TOC entry 2810 (class 2606 OID 25091)
+-- Name: interests interests_interest_uuid_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.interests
+    ADD CONSTRAINT interests_interest_uuid_key UNIQUE (interest_uuid);
+
+
+--
+-- TOC entry 2812 (class 2606 OID 25093)
+-- Name: interests interests_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.interests
+    ADD CONSTRAINT interests_pkey PRIMARY KEY (interest_id);
+
+
+--
+-- TOC entry 2814 (class 2606 OID 25095)
+-- Name: profile profil_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.profile
+    ADD CONSTRAINT profil_pkey PRIMARY KEY (profile_id);
+
+
+--
+-- TOC entry 2816 (class 2606 OID 25097)
+-- Name: profile profil_primary_email_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.profile
+    ADD CONSTRAINT profil_primary_email_key UNIQUE (primary_email);
+
+
+--
+-- TOC entry 2820 (class 2606 OID 25103)
+-- Name: profile_skills profile_skills_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.profile_skills
+    ADD CONSTRAINT profile_skills_pkey PRIMARY KEY (profile_skill_id);
+
+
+--
+-- TOC entry 2822 (class 2606 OID 25105)
+-- Name: profile_skills profile_skills_profile_skill_uuid_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.profile_skills
+    ADD CONSTRAINT profile_skills_profile_skill_uuid_key UNIQUE (profile_skill_uuid);
+
+
+--
+-- TOC entry 2818 (class 2606 OID 25107)
+-- Name: profile profile_uuid; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.profile
+    ADD CONSTRAINT profile_uuid UNIQUE (profile_uuid);
+
+
+--
+-- TOC entry 2824 (class 2606 OID 25109)
+-- Name: skills skills_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.skills
+    ADD CONSTRAINT skills_pkey PRIMARY KEY (skill_id);
+
+
+--
+-- TOC entry 2826 (class 2606 OID 25111)
+-- Name: skills skills_skill_uuid_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.skills
+    ADD CONSTRAINT skills_skill_uuid_key UNIQUE (skill_uuid);
+
+
+--
+-- TOC entry 2844 (class 2606 OID 25245)
+-- Name: users_interests users_interests_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users_interests
+    ADD CONSTRAINT users_interests_pkey PRIMARY KEY (users_interests_id);
+
+
+--
+-- TOC entry 2846 (class 2606 OID 25247)
+-- Name: users_interests users_interests_users_interests_uuid_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users_interests
+    ADD CONSTRAINT users_interests_users_interests_uuid_key UNIQUE (users_interests_uuid);
+
+
+--
+-- TOC entry 2828 (class 2606 OID 25113)
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (user_id);
+
+
+--
+-- TOC entry 2830 (class 2606 OID 25115)
+-- Name: users users_users_uuid_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_users_uuid_key UNIQUE (user_uuid);
+
+
+--
+-- TOC entry 2847 (class 2606 OID 25232)
+-- Name: category category_user_uuid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.category
+    ADD CONSTRAINT category_user_uuid_fkey FOREIGN KEY (user_uuid) REFERENCES public.users(user_uuid);
+
+
+--
+-- TOC entry 2848 (class 2606 OID 25116)
+-- Name: city city_country_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.city
+    ADD CONSTRAINT city_country_id_fkey FOREIGN KEY (country_uuid) REFERENCES public.country(country_uuid);
+
+
+--
+-- TOC entry 2849 (class 2606 OID 25121)
+-- Name: profile profil_city_uuid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.profile
+    ADD CONSTRAINT profil_city_uuid_fkey FOREIGN KEY (city_uuid) REFERENCES public.city(city_uuid);
+
+
+--
+-- TOC entry 2850 (class 2606 OID 25126)
+-- Name: profile profil_country_uuid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.profile
+    ADD CONSTRAINT profil_country_uuid_fkey FOREIGN KEY (country_uuid) REFERENCES public.country(country_uuid);
+
+
+--
+-- TOC entry 2851 (class 2606 OID 25189)
+-- Name: profile profile_country_code_uuid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.profile
+    ADD CONSTRAINT profile_country_code_uuid_fkey FOREIGN KEY (primary_number_country_code_uuid) REFERENCES public.country_code(country_code_uuid);
+
+
+--
+-- TOC entry 2852 (class 2606 OID 25194)
+-- Name: profile profile_secondary_number_country_code_uuid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.profile
+    ADD CONSTRAINT profile_secondary_number_country_code_uuid_fkey FOREIGN KEY (secondary_number_country_code_uuid) REFERENCES public.country_code(country_code_uuid);
+
+
+--
+-- TOC entry 2853 (class 2606 OID 25141)
+-- Name: profile_skills profile_skills_category_uuid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.profile_skills
+    ADD CONSTRAINT profile_skills_category_uuid_fkey FOREIGN KEY (category_uuid) REFERENCES public.category(category_uuid);
+
+
+--
+-- TOC entry 2854 (class 2606 OID 25146)
+-- Name: profile_skills profile_skills_skill_uuid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.profile_skills
+    ADD CONSTRAINT profile_skills_skill_uuid_fkey FOREIGN KEY (skill_uuid) REFERENCES public.skills(skill_uuid);
+
+
+--
+-- TOC entry 2855 (class 2606 OID 25151)
+-- Name: profile_skills profile_skills_user_uuid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.profile_skills
+    ADD CONSTRAINT profile_skills_user_uuid_fkey FOREIGN KEY (user_uuid) REFERENCES public.users(user_uuid);
+
+
+--
+-- TOC entry 2856 (class 2606 OID 25213)
+-- Name: skills skills_user_uuid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.skills
+    ADD CONSTRAINT skills_user_uuid_fkey FOREIGN KEY (user_uuid) REFERENCES public.users(user_uuid);
+
+
+--
+-- TOC entry 2858 (class 2606 OID 25248)
+-- Name: users_interests users_interests_interest_uuid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users_interests
+    ADD CONSTRAINT users_interests_interest_uuid_fkey FOREIGN KEY (interest_uuid) REFERENCES public.interests(interest_uuid);
+
+
+--
+-- TOC entry 2859 (class 2606 OID 25253)
+-- Name: users_interests users_interests_user_uuid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users_interests
+    ADD CONSTRAINT users_interests_user_uuid_fkey FOREIGN KEY (user_uuid) REFERENCES public.users(user_uuid);
+
+
+--
+-- TOC entry 2857 (class 2606 OID 25156)
+-- Name: users users_login_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_login_id_fkey FOREIGN KEY (login_id) REFERENCES public.profile(primary_email);
+
+
+-- Completed on 2019-05-13 12:35:52
+
+--
+-- PostgreSQL database dump complete
+--
+

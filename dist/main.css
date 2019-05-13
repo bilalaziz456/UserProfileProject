@@ -1,0 +1,529 @@
+.rc-slider {
+  position: relative;
+  height: 14px;
+  padding: 5px 0;
+  width: 100%;
+  border-radius: 6px;
+  -ms-touch-action: none;
+      touch-action: none;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+.rc-slider * {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+.rc-slider-rail {
+  position: absolute;
+  width: 100%;
+  background-color: #e9e9e9;
+  height: 4px;
+  border-radius: 6px;
+}
+.rc-slider-track {
+  position: absolute;
+  left: 0;
+  height: 4px;
+  border-radius: 6px;
+  background-color: #abe2fb;
+}
+.rc-slider-handle {
+  position: absolute;
+  margin-left: -7px;
+  margin-top: -5px;
+  width: 14px;
+  height: 14px;
+  cursor: pointer;
+  cursor: -webkit-grab;
+  cursor: grab;
+  border-radius: 50%;
+  border: solid 2px #96dbfa;
+  background-color: #fff;
+  -ms-touch-action: pan-x;
+      touch-action: pan-x;
+}
+.rc-slider-handle:focus {
+  border-color: #57c5f7;
+  box-shadow: 0 0 0 5px #96dbfa;
+  outline: none;
+}
+.rc-slider-handle-click-focused:focus {
+  border-color: #96dbfa;
+  box-shadow: unset;
+}
+.rc-slider-handle:hover {
+  border-color: #57c5f7;
+}
+.rc-slider-handle:active {
+  border-color: #57c5f7;
+  box-shadow: 0 0 5px #57c5f7;
+  cursor: -webkit-grabbing;
+  cursor: grabbing;
+}
+.rc-slider-mark {
+  position: absolute;
+  top: 18px;
+  left: 0;
+  width: 100%;
+  font-size: 12px;
+}
+.rc-slider-mark-text {
+  position: absolute;
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+  cursor: pointer;
+  color: #999;
+}
+.rc-slider-mark-text-active {
+  color: #666;
+}
+.rc-slider-step {
+  position: absolute;
+  width: 100%;
+  height: 4px;
+  background: transparent;
+}
+.rc-slider-dot {
+  position: absolute;
+  bottom: -2px;
+  margin-left: -4px;
+  width: 8px;
+  height: 8px;
+  border: 2px solid #e9e9e9;
+  background-color: #fff;
+  cursor: pointer;
+  border-radius: 50%;
+  vertical-align: middle;
+}
+.rc-slider-dot-active {
+  border-color: #96dbfa;
+}
+.rc-slider-disabled {
+  background-color: #e9e9e9;
+}
+.rc-slider-disabled .rc-slider-track {
+  background-color: #ccc;
+}
+.rc-slider-disabled .rc-slider-handle,
+.rc-slider-disabled .rc-slider-dot {
+  border-color: #ccc;
+  box-shadow: none;
+  background-color: #fff;
+  cursor: not-allowed;
+}
+.rc-slider-disabled .rc-slider-mark-text,
+.rc-slider-disabled .rc-slider-dot {
+  cursor: not-allowed !important;
+}
+.rc-slider-vertical {
+  width: 14px;
+  height: 100%;
+  padding: 0 5px;
+}
+.rc-slider-vertical .rc-slider-rail {
+  height: 100%;
+  width: 4px;
+}
+.rc-slider-vertical .rc-slider-track {
+  left: 5px;
+  bottom: 0;
+  width: 4px;
+}
+.rc-slider-vertical .rc-slider-handle {
+  margin-left: -5px;
+  margin-bottom: -7px;
+  -ms-touch-action: pan-y;
+      touch-action: pan-y;
+}
+.rc-slider-vertical .rc-slider-mark {
+  top: 0;
+  left: 18px;
+  height: 100%;
+}
+.rc-slider-vertical .rc-slider-step {
+  height: 100%;
+  width: 4px;
+}
+.rc-slider-vertical .rc-slider-dot {
+  left: 2px;
+  margin-bottom: -4px;
+}
+.rc-slider-vertical .rc-slider-dot:first-child {
+  margin-bottom: -4px;
+}
+.rc-slider-vertical .rc-slider-dot:last-child {
+  margin-bottom: -4px;
+}
+.rc-slider-tooltip-zoom-down-enter,
+.rc-slider-tooltip-zoom-down-appear {
+  animation-duration: .3s;
+  animation-fill-mode: both;
+  display: block !important;
+  animation-play-state: paused;
+}
+.rc-slider-tooltip-zoom-down-leave {
+  animation-duration: .3s;
+  animation-fill-mode: both;
+  display: block !important;
+  animation-play-state: paused;
+}
+.rc-slider-tooltip-zoom-down-enter.rc-slider-tooltip-zoom-down-enter-active,
+.rc-slider-tooltip-zoom-down-appear.rc-slider-tooltip-zoom-down-appear-active {
+  animation-name: rcSliderTooltipZoomDownIn;
+  animation-play-state: running;
+}
+.rc-slider-tooltip-zoom-down-leave.rc-slider-tooltip-zoom-down-leave-active {
+  animation-name: rcSliderTooltipZoomDownOut;
+  animation-play-state: running;
+}
+.rc-slider-tooltip-zoom-down-enter,
+.rc-slider-tooltip-zoom-down-appear {
+  transform: scale(0, 0);
+  animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+}
+.rc-slider-tooltip-zoom-down-leave {
+  animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+}
+@keyframes rcSliderTooltipZoomDownIn {
+  0% {
+    opacity: 0;
+    transform-origin: 50% 100%;
+    transform: scale(0, 0);
+  }
+  100% {
+    transform-origin: 50% 100%;
+    transform: scale(1, 1);
+  }
+}
+@keyframes rcSliderTooltipZoomDownOut {
+  0% {
+    transform-origin: 50% 100%;
+    transform: scale(1, 1);
+  }
+  100% {
+    opacity: 0;
+    transform-origin: 50% 100%;
+    transform: scale(0, 0);
+  }
+}
+.rc-slider-tooltip {
+  position: absolute;
+  left: -9999px;
+  top: -9999px;
+  visibility: visible;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+.rc-slider-tooltip * {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+.rc-slider-tooltip-hidden {
+  display: none;
+}
+.rc-slider-tooltip-placement-top {
+  padding: 4px 0 8px 0;
+}
+.rc-slider-tooltip-inner {
+  padding: 6px 2px;
+  min-width: 24px;
+  height: 24px;
+  font-size: 12px;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+  background-color: #6c6c6c;
+  border-radius: 6px;
+  box-shadow: 0 0 4px #d9d9d9;
+}
+.rc-slider-tooltip-arrow {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+}
+.rc-slider-tooltip-placement-top .rc-slider-tooltip-arrow {
+  bottom: 4px;
+  left: 50%;
+  margin-left: -4px;
+  border-width: 4px 4px 0;
+  border-top-color: #6c6c6c;
+}
+
+.react-phone-number-input__row
+{
+	/* This is done to stretch the contents of this component */
+	display     : flex;
+	align-items : center;
+}
+
+.react-phone-number-input__phone
+{
+	/* The phone number input stretches to fill all empty space */
+	flex : 1;
+
+	/* The phone number input should shrink
+	   to make room for the extension input */
+	min-width : 0;
+}
+
+.react-phone-number-input__icon
+{
+	/* The flag icon size is 4x3 hence the exact `width` and `height` values */
+	width      : 1.24em;
+	height     : 0.93em;
+
+	/* `1px` is still too much for a "retina" screen but there's no way in CSS to specify "hairline" border width. */
+	border     : 1px solid rgba(0, 0, 0, 0.5);
+
+	/* Makes sure `width`x`height` is exactly `4x3` and `border` width is not included in it */
+	box-sizing : content-box;
+}
+
+.react-phone-number-input__icon--international
+{
+	/* The international icon size is square */
+	/* and also has no border hence the `2 * 1px` `width` and `height` compensation */
+	width  : calc(0.93em + 2px);
+	height : calc(0.93em + 2px);
+
+	/* The international icon size is square hence the exact `padding` value */
+	/* for precise alignment with `4x3` sized country flags. */
+	padding-left  : 0.155em;
+	padding-right : 0.155em;
+
+	border : none;
+}
+
+.react-phone-number-input__error
+{
+	margin-left : calc(1.24em + 2px + 0.3em + 0.35em + 0.5em);
+	margin-top  : calc(0.3rem);
+	color       : #D30F00;
+}
+
+.react-phone-number-input__icon-image
+{
+	max-width  : 100%;
+	max-height : 100%;
+}
+
+/* Removes `<input type="number"/>` up/down arrows in Webkit browsers. */
+.react-phone-number-input__ext-input::-webkit-inner-spin-button,
+.react-phone-number-input__ext-input::-webkit-outer-spin-button
+{
+	margin             : 0 !important;
+	-webkit-appearance : none !important;
+	-moz-appearance    : textfield !important;
+}
+
+.react-phone-number-input__ext-input
+{
+	width : 3em;
+}
+
+.react-phone-number-input__ext
+{
+	white-space: nowrap;
+}
+
+.react-phone-number-input__ext,
+.react-phone-number-input__ext-input
+{
+	margin-left : 0.5em;
+}
+
+/* Styling native country `<select/>`. */
+
+.react-phone-number-input__country--native
+{
+	position     : relative;
+	align-self   : stretch;
+	display      : flex;
+	align-items  : center;
+	margin-right : 0.5em;
+}
+
+.react-phone-number-input__country-select
+{
+	position : absolute;
+	top      : 0;
+	left     : 0;
+	height   : 100%;
+	width    : 100%;
+	z-index  : 1;
+	border   : 0;
+	opacity  : 0;
+	cursor   : pointer;
+}
+
+.react-phone-number-input__country-select-arrow
+{
+	display            : block;
+	content            : '';
+	width              : 0;
+	height             : 0;
+	margin-bottom      : 0.1em;
+	margin-top         : 0.3em;
+	margin-left        : 0.3em;
+	border-width       : 0.35em 0.2em 0 0.2em;
+	border-style       : solid;
+	border-left-color  : transparent;
+	border-right-color : transparent;
+	color              : #B8BDC4;
+	opacity            : 0.7;
+	transition         : color 0.1s;
+}
+
+/* Something from stackoverflow. */
+.react-phone-number-input__country-select-divider
+{
+	font-size  : 1px;
+	background : black;
+}
+
+.react-phone-number-input__country-select:focus + .react-phone-number-input__country-select-arrow,
+.react-phone-number-input__country.rrui__select--focus .rrui__select__arrow
+{
+	color : #03B2CB;
+}
+
+/* Styling phone number input */
+
+.react-phone-number-input__input
+{
+	height        : calc(0.3rem * 6);
+	outline       : none;
+	border-radius : 0;
+	padding       : 0;
+	appearance    : none;
+	border        : none;
+	border-bottom : 1px solid #C5D2E0;
+	transition    : border 0.1s;
+	font-size     : inherit;
+}
+
+.react-phone-number-input__input:focus
+{
+	border-color : #03B2CB;
+}
+
+.react-phone-number-input__input--disabled
+{
+	cursor : default;
+}
+
+.react-phone-number-input__input--invalid,
+.react-phone-number-input__input--invalid:focus
+{
+	border-color : #EB2010;
+}
+
+/* Overrides Chrome autofill yellow background color */
+.react-phone-number-input__input:-webkit-autofill
+{
+	box-shadow : 0 0 0 1000px white inset;
+}
+
+/* A small fix for `react-responsive-ui` */
+.react-phone-number-input__country .rrui__select__button
+{
+	border-bottom : none;
+}
+
+.center {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+}
+.red {
+    color: red;
+}
+.border-color{
+    border-style: solid;
+    padding-bottom: 10px;
+}
+.heading {
+    padding: 10px;
+    color: #FFF;
+    background-color: black;
+
+}
+.centerBlock {
+    text-align: center;
+    display: block;
+}
+.reset {
+    font-size: 13px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.bottom-margin {
+    margin-top: 50px;
+    margin-bottom: 30px;
+}
+.display-image{
+    height: 210px;
+    width: 220px;
+}
+.display-image-approval{
+    height: 100px;
+    width: 100px;
+}
+.top {
+    margin-top: 50px;
+}
+.fullWidth {
+    width: 100%;
+}
+
+.sidenav {
+    height: 100%;
+    width: 200px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+
+
+.sidenav li {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 20px;
+    color: #818181;
+    display: block;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    outline: none;
+}
+
+.removePaddingleft {
+    padding-left: 0pc;
+}
+
+.profile-display-margin {
+    margin-left: 10px;
+}
+.spinner{
+    width: 35px;
+    display: inline-block;
+    margin: 5px 0px;
+}
+.inline {
+    display: inline-block;
+}
+
+.button-change-index{
+    height: 20px;
+    width : 25px;
+}
