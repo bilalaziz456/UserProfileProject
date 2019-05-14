@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Select from 'react-select/lib/Creatable';
 import AddSearchFilter from './AddSearchFilters'
+
 const SEARCH = 'http://127.0.0.1:3000/search';
 const GET_IMAGE_PATH = 'http://127.0.0.1:3000/';
 const GET_SUGGESTION = 'http://127.0.0.1:3000/getSuggestion';
@@ -29,14 +30,14 @@ class SearchUsers extends Component {
             suggestions: [],
             value: '',
             getSuggestion: [],
-            sendData : [{
+            sendData: [{
                 skill: '',
                 fromRating: '',
-                toRating : '',
+                toRating: '',
                 fromInterest: '',
                 toInterest: '',
                 fromExperience: '',
-                toExperience:''
+                toExperience: ''
             }],
             bool: false
         };
@@ -67,10 +68,7 @@ class SearchUsers extends Component {
             },
             method: 'POST',
             body: JSON.stringify({
-                skill: this.state.suggestion,
-                rating: this.state.rating,
-                interest: this.state.interest,
-                experience: this.state.experience
+               sendData : this.state.sendData
             })
         }).then((res) => {
             res.json().then((result) => {
@@ -113,79 +111,62 @@ class SearchUsers extends Component {
         let manipulateData = this.state.sendData;
         manipulateData[searchIndex] = searchObject;
         this.setState({
-            sendData : manipulateData
-        },function () {
+            sendData: manipulateData
+        }, function () {
             console.log(this.state.sendData)
         })
     }
 
 
-    addFilter(e){
+    addFilter(e) {
         let manipulate = this.state.sendData;
         manipulate.push({
             skill: '',
             fromRating: '',
-            toRating : '',
+            toRating: '',
             fromInterest: '',
             toInterest: '',
             fromExperience: '',
-            toExperience:''
+            toExperience: ''
         });
         this.setState({
-            filter : manipulate
+            filter: manipulate
         });
         e.preventDefault()
     }
-    removeFilter(index){
+
+    removeFilter(index) {
         let manipulateData = this.state.sendData;
         manipulateData.splice(index, 1);
         this.setState({
             sendData: manipulateData
         });
     }
+
     render() {
         if (this.state.bool === true) {
             return (
                 <div className="container">
                     <h1 className="top">Search Users</h1>
                     <button className="btn btn-default float-right">Add Filter</button>
-                    <div className="row">
-                        <div className="col-md-4">
-                            <label htmlFor="skill">Skill:</label>
-                            <Select
-                                isMulti
-                                name="skill"
-                                options={this.state.getSuggestion}
-                                onChange={this.onSuggestionChange}
-                                isClearable={true}
-                                className="basic-multi-select"
-                                classNamePrefix="select"
-                                placeholder="Search..."
-                            />
+                    <h1 className="top">Search Users</h1>
+                    <div>
+                        {
+                            this.state.sendData.map((value, index) => {
+                                return (
+                                    <AddSearchFilter
+                                        key={Math.random()} id={index} value={value} options={this.state.getSuggestion}
+                                        removeFilter={this.removeFilter} handleSearchChange={this.handleChange}
+                                    />
 
-                        </div>
-                        <div className="col-md-2">
-                            <label htmlFor="rating">Rating:</label>
-                            <input type='number' name='rating' className='form-control' id="rating"
-                                   onChange={this.handleChange}/>
-                        </div>
-                        <div className="col-md-2">
-                            <label htmlFor="interest">Interest:</label>
-                            <input type='number' name='interest' className='form-control' id="interest"
-                                   onChange={this.handleChange}/>
-                        </div>
-                        <div className="col-md-2">
-                            <div className="form-group">
-                                <label htmlFor="experience">Experience:</label>
-                                <input type='number' name='experience' className='form-control' id="interest"
-                                       onChange={this.handleChange}/>
-                            </div>
-
-                        </div>
-                        <div className="col-md-2">
-                            <label> </label>
-                            <button className='btn btn-primary search-button' onClick={this.search}>Search</button>
-                        </div>
+                                )
+                            })
+                        }
+                    </div>
+                    <br/>
+                    <div className="col-md-2">
+                        <label> </label>
+                        <button className='btn btn-primary search-button' onClick={this.search}>Search</button>
                     </div>
                     <table className="table table-bordered text-center top">
                         <thead>
@@ -209,11 +190,12 @@ class SearchUsers extends Component {
         } else {
             return (
                 <div className="container">
-                    <button className="btn btn-primary float-right button-top" onClick={this.addFilter}>+Add Filter</button>
+                    <button className="btn btn-primary float-right button-top" onClick={this.addFilter}>+Add Filter
+                    </button>
                     <h1 className="top">Search Users</h1>
                     <div>
                         {
-                            this.state.sendData.map((value, index)=>{
+                            this.state.sendData.map((value, index) => {
                                 return (
                                     <AddSearchFilter
                                         key={Math.random()} id={index} value={value} options={this.state.getSuggestion}
@@ -223,7 +205,8 @@ class SearchUsers extends Component {
                                 )
                             })
                         }
-                    </div><br/>
+                    </div>
+                    <br/>
                     <div className="row">
                         <div className="col-md-2">
                             <button className='btn btn-primary search-button' onClick={this.search}>Search</button>

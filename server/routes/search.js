@@ -14,7 +14,7 @@ router.get('/getSuggestion', jsonParser, (req, res) => {
     })
 });
 
-router.post('/search', jsonParser, (req, res, next) => {
+router.post('/search', jsonParser, (req, res) => {
     let getSearch = [];
     let userUuid;
     let bool;
