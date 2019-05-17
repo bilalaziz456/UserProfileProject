@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Autosuggest from 'react-autosuggest';
+import AutoSuggest from 'react-autosuggest';
 import Drop from 'react-select';
 import 'react-dropdown/style.css'
 
@@ -157,7 +157,6 @@ class AddSearchFilters extends Component {
         let search = this.props.value;
         search.skill = event.target.value;
         this.props.handleSearchChange(this.props.id, search);
-        console.log(this.props.value.skill);
         this.setState({
             value : this.props.value.skill
         })
@@ -167,10 +166,6 @@ class AddSearchFilters extends Component {
         this.setState({
             value : newValue
         });
-        // let search = this.props.value;
-        // search.skill = newValue;
-        // this.props.handleSearchChange(this.props.id, search);
-        // console.log(this.props.value.skill);
 
     };
     render() {
@@ -193,7 +188,7 @@ class AddSearchFilters extends Component {
                 <div className="row">
                     <div className="col-md-3">
                         <label htmlFor="skill">Skill:</label>
-                        <Autosuggest
+                        <AutoSuggest
                             suggestions={suggestions}
                             onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
                             onSuggestionsClearRequested={this.onSuggestionsClearRequested}
@@ -210,6 +205,7 @@ class AddSearchFilters extends Component {
                             <div className="col-md-6">
                                 <span>From: </span>
                                 <Drop   options={ratingInterest} id="rating" className="drop-down"
+                                        captureMenuScroll={false}
                                         onChange={this.handleFromRating}
                                         defaultValue={{
                                             value: this.props.value.fromRating,
@@ -220,6 +216,7 @@ class AddSearchFilters extends Component {
                             <div className="col-md-6">
                                 <span>To: </span>
                                 <Drop   options={ratingInterest} id="rating" className="drop-down"
+                                        captureMenuScroll={false}
                                         onChange={this.handleToRating} onFocus={this.checkRating}
                                         defaultValue={{
                                             value: this.props.value.toRating,
@@ -235,6 +232,7 @@ class AddSearchFilters extends Component {
                             <div className="col-md-6">
                                 <span>From: </span>
                                 <Drop   options={ratingInterest}  className="drop-down"
+                                        captureMenuScroll={false}
                                         onChange={this.handleFromInterest}
                                         defaultValue={{
                                             value: this.props.value.fromInterest,
@@ -245,6 +243,7 @@ class AddSearchFilters extends Component {
                             <div className="col-md-6">
                                 <span>To: </span>
                                 <Drop   options={ratingInterest} id="rating" className="drop-down"
+                                        captureMenuScroll={false}
                                         onChange={this.handleToInterest}
                                         defaultValue={{
                                             value: this.props.value.toInterest,
@@ -261,6 +260,7 @@ class AddSearchFilters extends Component {
                                 <div className="col-md-6">
                                     <span>From: </span>
                                     <Drop   options={experience}  className="drop-down"
+                                            captureMenuScroll={false}
                                             onChange={this.handleFromExperience}
                                             defaultValue={{
                                                 value: this.props.value.fromExperience,
@@ -271,6 +271,7 @@ class AddSearchFilters extends Component {
                                 <div className="col-md-6">
                                     <span>To: </span>
                                     <Drop   options={experience} id="rating" className="drop-down"
+                                            captureMenuScroll={false}
                                             onChange={this.handleToExperience}
                                             defaultValue={{
                                                 value: this.props.value.toExperience,

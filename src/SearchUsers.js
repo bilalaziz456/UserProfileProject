@@ -1,26 +1,11 @@
 import React, {Component} from 'react';
-import Select from 'react-select/lib/Creatable';
 import AddSearchFilter from './AddSearchFilters'
 
 const SEARCH = 'http://127.0.0.1:3000/search';
 const GET_IMAGE_PATH = 'http://127.0.0.1:3000/';
 const GET_SUGGESTION = 'http://127.0.0.1:3000/getSuggestion';
 
-// const getSuggestions = value => {
-//     const inputValue = value.trim().toLowerCase();
-//     const inputLength = inputValue.length;
-//
-//     return inputLength === 0 ? [] : languages.filter(lang =>
-//         lang.name.toLowerCase().slice(0, inputLength) === inputValue
-//     );
-// };
-//
-// const getSuggestionValue = suggestion => suggestion.name;
-// const renderSuggestion = suggestion => (
-//     <div>
-//         {suggestion.name}
-//     </div>
-// );
+
 class SearchUsers extends Component {
     constructor(props) {
         super(props);
@@ -72,7 +57,7 @@ class SearchUsers extends Component {
             })
         }).then((res) => {
             res.json().then((result) => {
-                if (result.message === "No result found") {
+                if (result.message) {
                     this.setState({
                         bool: false,
                         message: result.message
@@ -85,18 +70,13 @@ class SearchUsers extends Component {
                             return (
                                 <tr key={index}>
                                     <td>
-                                        <img src={GET_IMAGE_PATH + value.imagePath}/>
+                                        <img src={GET_IMAGE_PATH + value.image_path}/>
                                     </td>
                                     <td>
-                                        <a href={'/p/' + value.userUuid}
-                                           target="_blank">{value.firstName + ' ' + value.lastName}</a>
+                                        <a href={'/p/' + value.user_uuid}
+                                           target="_blank">{value.first_name + ' ' + value.last_name}</a>
                                     </td>
-                                    <td>{value.email}</td>
-                                    <td>{value.category}</td>
-                                    <td>{value.skill}</td>
-                                    <td>{value.rating}</td>
-                                    <td>{value.interest}</td>
-                                    <td>{value.experience}</td>
+                                    <td>{value.login_id}</td>
                                 </tr>
                             )
                         })
@@ -112,8 +92,6 @@ class SearchUsers extends Component {
         manipulateData[searchIndex] = searchObject;
         this.setState({
             sendData: manipulateData
-        }, function () {
-            console.log(this.state.sendData)
         })
     }
 
@@ -147,8 +125,7 @@ class SearchUsers extends Component {
         if (this.state.bool === true) {
             return (
                 <div className="container">
-                    <h1 className="top">Search Users</h1>
-                    <button className="btn btn-default float-right">Add Filter</button>
+                    <button className="btn btn-primary float-right button-top" onClick={this.addFilter}>+Add Filter</button>
                     <h1 className="top">Search Users</h1>
                     <div>
                         {
@@ -164,9 +141,10 @@ class SearchUsers extends Component {
                         }
                     </div>
                     <br/>
-                    <div className="col-md-2">
-                        <label> </label>
-                        <button className='btn btn-primary search-button' onClick={this.search}>Search</button>
+                    <div className="row">
+                        <div className="col-md-2">
+                            <button className='btn btn-primary search-button' onClick={this.search}>Search</button>
+                        </div>
                     </div>
                     <table className="table table-bordered text-center top">
                         <thead>
@@ -174,11 +152,6 @@ class SearchUsers extends Component {
                             <th>Image</th>
                             <th>Name</th>
                             <th>Email</th>
-                            <th>Category</th>
-                            <th>Skill</th>
-                            <th>Rating</th>
-                            <th>Interest</th>
-                            <th>Experience</th>
                         </tr>
                         </thead>
                         <tbody>
