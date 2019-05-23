@@ -4,9 +4,12 @@
     <list default="true" id="a828d72f-eff0-4dc1-9483-17fafb5ae4b2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/ForgetPassword.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/ForgetPassword.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/search.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/search.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/AddSearchFilters.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/AddSearchFilters.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/users.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/users.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Category.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/Category.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../src/SearchUsers.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/SearchUsers.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/UsersImage.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/UsersImage.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -55,9 +58,10 @@
     <session id="-851285937">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="1" />
+          <entry key="project.closed" value="2" />
           <entry key="project.open.time.1" value="1" />
           <entry key="project.open.time.11" value="1" />
+          <entry key="project.open.time.21" value="1" />
           <entry key="project.open.time.27" value="1" />
           <entry key="project.open.time.29" value="1" />
           <entry key="project.open.time.33" value="1" />
@@ -65,19 +69,20 @@
           <entry key="project.open.time.37" value="1" />
           <entry key="project.open.time.5" value="1" />
           <entry key="project.open.time.51" value="1" />
-          <entry key="project.opened" value="9" />
+          <entry key="project.open.time.6" value="1" />
+          <entry key="project.opened" value="11" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="701" value="1" />
           <entry key="770" value="2" />
-          <entry key="js" value="5189" />
+          <entry key="js" value="8341" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JavaScript" value="5192" />
+          <entry key="JavaScript" value="8344" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -86,12 +91,16 @@
           <entry key="1454" value="1" />
           <entry key="631" value="1" />
           <entry key="640" value="1" />
+          <entry key="655" value="1" />
+          <entry key="667" value="1" />
           <entry key="668" value="1" />
           <entry key="669" value="1" />
+          <entry key="681" value="1" />
           <entry key="683" value="1" />
           <entry key="690" value="1" />
           <entry key="701" value="1" />
           <entry key="702" value="1" />
+          <entry key="721" value="1" />
           <entry key="728" value="1" />
           <entry key="736" value="1" />
           <entry key="751" value="1" />
@@ -100,13 +109,14 @@
           <entry key="760" value="1" />
           <entry key="770" value="1" />
           <entry key="788" value="1" />
+          <entry key="852" value="1" />
           <entry key="js" value="11" />
           <entry key="ts" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="JavaScript" value="29" />
+          <entry key="JavaScript" value="34" />
           <entry key="TypeScript" value="1" />
         </counts>
       </usages-collector>
@@ -122,53 +132,26 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/UserProfile.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="130">
-              <caret line="39" column="14" lean-forward="true" selection-start-line="39" selection-start-column="14" selection-end-line="39" selection-end-column="14" />
+            <state relative-caret-position="388">
+              <caret line="39" column="14" selection-start-line="39" selection-start-column="14" selection-end-line="39" selection-end-column="14" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/routes/approvals.js">
+        <entry file="file://$PROJECT_DIR$/routes/search.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="187" column="47" lean-forward="true" selection-start-line="187" selection-start-column="47" selection-end-line="187" selection-end-column="47" />
+            <state relative-caret-position="-1034">
+              <caret line="22" selection-start-line="22" selection-end-line="22" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/routes/search.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="622">
-              <caret line="58" column="53" lean-forward="true" selection-start-line="58" selection-start-column="53" selection-end-line="58" selection-end-column="53" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/routes/register.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="636">
-              <caret line="58" column="55" selection-start-line="58" selection-start-column="55" selection-end-line="58" selection-end-column="55" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/users.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2012">
-              <caret line="154" column="7" lean-forward="true" selection-start-line="154" selection-start-column="7" selection-end-line="154" selection-end-column="7" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/routes/ForgetPassword.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-476">
-              <caret line="11" column="34" selection-start-line="11" selection-start-column="34" selection-end-line="11" selection-end-column="34" />
+            <state relative-caret-position="-2206">
+              <caret line="203" column="125" selection-start-line="203" selection-start-column="125" selection-end-line="203" selection-end-column="125" />
             </state>
           </provider>
         </entry>
@@ -194,6 +177,7 @@
       <find>rejectImage</find>
       <find>result.</find>
       <find>gmail</find>
+      <find>console.log</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -207,12 +191,12 @@
         <option value="$PROJECT_DIR$/routes/test.js" />
         <option value="$PROJECT_DIR$/routes/approvals.js" />
         <option value="$PROJECT_DIR$/routes/register.js" />
-        <option value="$PROJECT_DIR$/routes/ForgetPassword.js" />
         <option value="$PROJECT_DIR$/routes/connection.js" />
-        <option value="$PROJECT_DIR$/routes/users.js" />
         <option value="$PROJECT_DIR$/routes/UserProfile.js" />
         <option value="$PROJECT_DIR$/app.js" />
         <option value="$PROJECT_DIR$/routes/search.js" />
+        <option value="$PROJECT_DIR$/routes/users.js" />
+        <option value="$PROJECT_DIR$/routes/ForgetPassword.js" />
       </list>
     </option>
   </component>
@@ -327,12 +311,14 @@
       <workItem from="1557307339395" duration="2982000" />
       <workItem from="1557382479666" duration="3560000" />
       <workItem from="1557558016373" duration="589000" />
-      <workItem from="1557819760060" duration="31312000" />
+      <workItem from="1557819760060" duration="32043000" />
+      <workItem from="1558078835226" duration="31798000" />
+      <workItem from="1558593281747" duration="6263000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="274825000" />
+    <option name="totallyTimeSpent" value="313617000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -353,16 +339,16 @@
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.87799716" weight="0.32479784" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49788433" weight="0.39892185" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.6332863" visible="true" weight="0.32479784" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49717912" weight="0.39892185" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49788433" weight="0.32884097" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="TypeScript" order="9" />
-      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50211567" side_tool="true" weight="0.39757413" />
-      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.49788433" weight="0.32884097" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.36671367" side_tool="true" weight="0.32479784" />
+      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.49717912" weight="0.32884097" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -395,8 +381,35 @@
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/routes/users.js</url>
+          <line>191</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="37" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
   <component name="debuggerHistoryManager">
     <expressions id="evaluateExpression">
+      <expression>
+        <expression-string>queryJobType.toString()</expression-string>
+        <language-id>JavaScript</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>queryJobType</expression-string>
+        <language-id>JavaScript</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>queryJobType.toString().</expression-string>
+        <language-id>JavaScript</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>query.toString()</expression-string>
         <language-id>JavaScript</language-id>
@@ -424,21 +437,6 @@
       </expression>
       <expression>
         <expression-string>req.body.data[0].skills</expression-string>
-        <language-id>JavaScript</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>req.body.data[0].skills[0].skill</expression-string>
-        <language-id>JavaScript</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>req.body.data[0].skills.skill</expression-string>
-        <language-id>JavaScript</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>req.body.data[0].skill</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
@@ -492,20 +490,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/ForgetPassword.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-476">
-          <caret line="11" column="34" selection-start-line="11" selection-start-column="34" selection-end-line="11" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/users.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2012">
-          <caret line="154" column="7" lean-forward="true" selection-start-line="154" selection-start-column="7" selection-end-line="154" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
@@ -513,31 +497,45 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/UserProfile.js">
+    <entry file="file://$PROJECT_DIR$/routes/approvals.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="130">
-          <caret line="39" column="14" lean-forward="true" selection-start-line="39" selection-start-column="14" selection-end-line="39" selection-end-column="14" />
+        <state relative-caret-position="140">
+          <caret line="202" column="19" selection-start-line="202" selection-start-column="8" selection-end-line="202" selection-end-column="19" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/approvals.js">
+    <entry file="file://$PROJECT_DIR$/routes/UserProfile.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="187" column="47" lean-forward="true" selection-start-line="187" selection-start-column="47" selection-end-line="187" selection-end-column="47" />
+        <state relative-caret-position="388">
+          <caret line="39" column="14" selection-start-line="39" selection-start-column="14" selection-end-line="39" selection-end-column="14" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/routes/register.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="636">
-          <caret line="58" column="55" selection-start-line="58" selection-start-column="55" selection-end-line="58" selection-end-column="55" />
+        <state relative-caret-position="140">
+          <caret line="62" column="31" selection-start-line="62" selection-start-column="20" selection-end-line="62" selection-end-column="31" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/routes/search.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="622">
-          <caret line="58" column="53" lean-forward="true" selection-start-line="58" selection-start-column="53" selection-end-line="58" selection-end-column="53" />
+        <state relative-caret-position="-1034">
+          <caret line="22" selection-start-line="22" selection-end-line="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/ForgetPassword.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="55" column="31" selection-start-line="55" selection-start-column="20" selection-end-line="55" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/users.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2206">
+          <caret line="203" column="125" selection-start-line="203" selection-start-column="125" selection-end-line="203" selection-end-column="125" />
         </state>
       </provider>
     </entry>

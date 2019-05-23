@@ -16,9 +16,7 @@ const storage = multer.diskStorage({
         let dateTime = new Date();
         let date = dateTime.toISOString().replace('Z', '-').replace('T', '-').replace(':', '-').replace(':', '-').replace(/\.\d+/, "");
 
-        console.log(date);
         let fileName = date + userUuid + ext;
-        console.log(fileName);
         cb(null, fileName);
     }
 });
@@ -65,11 +63,23 @@ router.post('/login', jsonParser, function (req, res) {
 
 router.get('/getImage', jsonParser, (req, res) => {
     db('profile').select('image_path').where({'primary_email': email}).then((result) => {
-        console.log(result[0].image_path);
         res.send({displayImage: result[0].image_path});
     })
 });
+router.get('/getProfileInformation', jsonParser, (req, res) => {
 
+    db('profile').select('first_name', 'last_name', 'primary_email', 'secondary_email', 'primary_number', 'secondary_number').where({'primary_email': email})
+        .then((result) => {
+            res.send({
+                firstName: result[0].first_name,
+                lastName: result[0].last_name,
+                primaryEmail: result[0].primary_email,
+                secondaryEmail: result[0].secondary_email,
+                primaryNumber: result[0].primary_number,
+                secondaryName: result[0].secondary_number
+            })
+        })
+});
 router.get('/rejectionReason', jsonParser, (req, res) => {
     let rejection = [];
     db('approval_rejection_reasons').select('approval_rejection_reason').where({
@@ -79,7 +89,6 @@ router.get('/rejectionReason', jsonParser, (req, res) => {
         for (let i = 0; i < result.length; i++) {
             rejection.push({message: result[i].approval_rejection_reason})
         }
-        console.log([rejection]);
         res.send([rejection])
     })
 });
@@ -92,25 +101,27 @@ router.get('/jobType', jsonParser, async (req, res) => {
         res.send(jobType);
     })
 });
-router.post('/insertJobType', jsonParser,  (req, res) => {
+router.post('/insertJobType', jsonParser, (req, res) => {
     for (let i = 0; i < req.body.jobType.length; i++) {
-         db('interests').select('interest_uuid').where({'interest_name': req.body.jobType[i]}).then((result) => {
-             for(let j = 0; j < result.length; j++){
-                 db('users_interests')
-                     .insert({
-                         'interest_uuid': result[j].interest_uuid,
-                         'user_uuid': userUuid,
-                         'created_at': moment().format(),
-                         'updated_at': moment().format()
-                     }).then(()=>{
-                         console.log("Successfull")
-                 })
-             }
+        db('interests').select('interest_uuid').where({'interest_name': req.body.jobType[i]}).then((result) => {
+            for (let j = 0; j < result.length; j++) {
+                db('users_interests')
+                    .insert({
+                        'interest_uuid': result[j].interest_uuid,
+                        'user_uuid': userUuid,
+                        'created_at': moment().format(),
+                        'updated_at': moment().format()
+                    }).then(() => {
+                    console.log("Successfull")
+                })
+            }
 
         })
     }
 
 });
+
+
 router.get('/getCategory', jsonParser, async (req, res) => {
     let getCategory = [];
     await db('category').select('category_name').where({'status': 1}).then((result) => {
@@ -178,169 +189,183 @@ router.post('/changePassword', jsonParser, (req, res) => {
 router.post('/insertData', jsonParser, (req, res) => {
     let categoryPosition;
     let skillPosition = 0;
+    console.log(req.body.data.skill);
     for (let i = 0; i < req.body.data.length; i++) {
         if (req.body.data[i].category === "" || req.body.data[i].category === null) {
             res.send({message: "Category can not be empty"});
             break;
         } else {
-            db('category').select('category_uuid').where({'category_name': req.body.data[i].category}).then((result) => {
-                if (result === "" || result.length === 0) {
-                    db('category')
-                        .insert({
-                            'category_name': req.body.data[i].category,
-                            'created_at': moment().format(),
-                            'updated_at': moment().format(),
-                            'user_uuid': userUuid,
-                            'status': 0
-                        })
-                        .then(() => {
-                            db('category').select('category_uuid').where({'category_name': req.body.data[i].category}).then((result) => {
-                                let categoryUuid;
-                                categoryUuid = result[0].category_uuid;
-                                for (let j = 0; j < req.body.data[i].skills.length; j++) {
-                                    if (req.body.data[i].skills[j].skill === "" || req.body.data[i].skills[j].skill === null) {
-                                        res.send({message: "Skill can not be empty"});
-                                        break;
-                                    } else {
-                                        db('skills').select('skill_uuid').where({'skill_name': req.body.data[i].skills[j].skill}).then((result) => {
-                                            if (result === "" || result.length === 0) {
-                                                db('skills')
-                                                    .insert({
-                                                        'skill_name': req.body.data[i].skills[j].skill,
-                                                        'created_at': moment().format(),
-                                                        'updated_at': moment().format(),
-                                                        'status': 0,
-                                                        'user_uuid': userUuid
-                                                    })
-                                                    .then(() => {
-                                                        db('skills').select('skill_uuid').where({'skill_name': req.body.data[i].skills[j].skill}).then((result) => {
-                                                            let skillUuid;
-                                                            skillUuid = result[0].skill_uuid;
-                                                            skillPosition = j + 1;
-                                                            categoryPosition = i + 1;
-                                                            db('profile_skills')
-                                                                .insert({
-                                                                    'user_uuid': userUuid,
-                                                                    'category_position': categoryPosition,
-                                                                    'category_uuid': categoryUuid,
-                                                                    'skill_position': skillPosition,
-                                                                    'skill_uuid': skillUuid,
-                                                                    'skill_experience': req.body.data[i].skills[j].experience,
-                                                                    'skill_self_rating': req.body.data[i].skills[j].rating,
-                                                                    'skill_self_interest': req.body.data[i].skills[j].interest,
-                                                                    'skill_comment': req.body.data[i].skills[j].comment,
-                                                                    'created_at': moment().format(),
-                                                                    'updated_at': moment().format()
-                                                                }).then(() => {
-                                                                res.send({message: 'Successful'});
+            db('users').update({
+                'current_salary': req.body.currentSalary,
+                'expected_per_hour_salary': req.body.expectedPerHour,
+                'expected_salary': req.body.expectedSalary,
+                'updated_at': moment().format()
+            }).where({'login_id': email}).then(() => {
+                db('category').select('category_uuid').where({'category_name': req.body.data[i].category}).then((result) => {
+                    if (result === "" || result.length === 0) {
+                        db('category')
+                            .insert({
+                                'category_name': req.body.data[i].category,
+                                'created_at': moment().format(),
+                                'updated_at': moment().format(),
+                                'user_uuid': userUuid,
+                                'status': 0
+                            })
+                            .then(() => {
+                                db('category').select('category_uuid').where({'category_name': req.body.data[i].category}).then((result) => {
+                                    let categoryUuid;
+                                    categoryUuid = result[0].category_uuid;
+                                    for (let j = 0; j < req.body.data[i].skills.length; j++) {
+                                        if (req.body.data[i].skills[j].skill === "" || req.body.data[i].skills[j].skill === null) {
+                                            res.send({message: "Skill can not be empty"});
+                                            break;
+                                        } else {
+                                            db('skills').select('skill_uuid').where({'skill_name': req.body.data[i].skills[j].skill}).then((result) => {
+                                                if (result === "" || result.length === 0) {
+                                                    db('skills')
+                                                        .insert({
+                                                            'skill_name': req.body.data[i].skills[j].skill,
+                                                            'created_at': moment().format(),
+                                                            'updated_at': moment().format(),
+                                                            'status': 0,
+                                                            'user_uuid': userUuid
+                                                        })
+                                                        .then(() => {
+                                                            db('skills').select('skill_uuid').where({'skill_name': req.body.data[i].skills[j].skill}).then((result) => {
+                                                                let skillUuid;
+                                                                skillUuid = result[0].skill_uuid;
+                                                                skillPosition = j + 1;
+                                                                categoryPosition = i + 1;
+                                                                db('profile_skills')
+                                                                    .insert({
+                                                                        'user_uuid': userUuid,
+                                                                        'category_position': categoryPosition,
+                                                                        'category_uuid': categoryUuid,
+                                                                        'skill_position': skillPosition,
+                                                                        'skill_uuid': skillUuid,
+                                                                        'skill_experience': req.body.data[i].skills[j].experience,
+                                                                        'skill_self_rating': req.body.data[i].skills[j].rating,
+                                                                        'skill_self_interest': req.body.data[i].skills[j].interest,
+                                                                        'skill_comment': req.body.data[i].skills[j].comment,
+                                                                        'created_at': moment().format(),
+                                                                        'updated_at': moment().format()
+                                                                    }).then(() => {
+                                                                    if (j === req.body.data[i].skills.length - 1) {
+                                                                        res.send({message: 'Successful'});
+                                                                    }
+                                                                })
                                                             })
                                                         })
+                                                }
+                                                else {
+                                                    let skillUuid;
+                                                    skillUuid = result[0].skill_uuid;
+                                                    skillPosition = j + 1;
+                                                    categoryPosition = i + 1;
+                                                    db('profile_skills')
+                                                        .insert({
+                                                            'user_uuid': userUuid,
+                                                            'category_position': categoryPosition,
+                                                            'category_uuid': categoryUuid,
+                                                            'skill_position': skillPosition,
+                                                            'skill_uuid': skillUuid,
+                                                            'skill_experience': req.body.data[i].skills[j].experience,
+                                                            'skill_self_rating': req.body.data[i].skills[j].rating,
+                                                            'skill_self_interest': req.body.data[i].skills[j].interest,
+                                                            'skill_comment': req.body.data[i].skills[j].comment,
+                                                            'created_at': moment().format(),
+                                                            'updated_at': moment().format()
+                                                        }).then(() => {
+                                                        if (j === req.body.data[i].skills.length - 1) {
+                                                            res.send({message: 'Successful'});
+                                                        }
                                                     })
-                                            }
-                                            else {
-                                                let skillUuid;
-                                                skillUuid = result[0].skill_uuid;
-                                                skillPosition = j + 1;
-                                                categoryPosition = i + 1;
-                                                db('profile_skills')
-                                                    .insert({
-                                                        'user_uuid': userUuid,
-                                                        'category_position': categoryPosition,
-                                                        'category_uuid': categoryUuid,
-                                                        'skill_position': skillPosition,
-                                                        'skill_uuid': skillUuid,
-                                                        'skill_experience': req.body.data[i].skills[j].experience,
-                                                        'skill_self_rating': req.body.data[i].skills[j].rating,
-                                                        'skill_self_interest': req.body.data[i].skills[j].interest,
-                                                        'skill_comment': req.body.data[i].skills[j].comment,
-                                                        'created_at': moment().format(),
-                                                        'updated_at': moment().format()
-                                                    }).then(() => {
-                                                    res.send({message: 'Successful'});
+                                                }
+                                            })
+                                        }
+
+                                    }
+                                })
+                            });
+                    }
+                    else {
+                        let categoryUuid;
+                        categoryUuid = result[0].category_uuid;
+                        for (let j = 0; j < req.body.data[i].skills.length; j++) {
+                            if (req.body.data[i].skills[j].skill === "" || req.body.data[i].skills[j].skill === null) {
+                                res.send({message: "Skill can not be empty"});
+                                break;
+                            } else {
+                                db('skills').select('skill_uuid').where({'skill_name': req.body.data[i].skills[j].skill}).then((result) => {
+                                    if (result === "" || result.length === 0) {
+                                        db('skills')
+                                            .insert({
+                                                'skill_name': req.body.data[i].skills[j].skill,
+                                                'created_at': moment().format(),
+                                                'updated_at': moment().format(),
+                                                'status': 0,
+                                                'user_uuid': userUuid
+                                            })
+                                            .then(() => {
+                                                db('skills').select('skill_uuid').where({'skill_name': req.body.data[i].skills[j].skill}).then((result) => {
+                                                    let skillUuid;
+                                                    skillUuid = result[0].skill_uuid;
+                                                    skillPosition = j + 1;
+                                                    categoryPosition = i + 1;
+                                                    db('profile_skills')
+                                                        .insert({
+                                                            'user_uuid': userUuid,
+                                                            'category_position': categoryPosition,
+                                                            'category_uuid': categoryUuid,
+                                                            'skill_position': skillPosition,
+                                                            'skill_uuid': skillUuid,
+                                                            'skill_experience': req.body.data[i].skills[j].experience,
+                                                            'skill_self_rating': req.body.data[i].skills[j].rating,
+                                                            'skill_self_interest': req.body.data[i].skills[j].interest,
+                                                            'skill_comment': req.body.data[i].skills[j].comment,
+                                                            'created_at': moment().format(),
+                                                            'updated_at': moment().format()
+                                                        }).then(() => {
+                                                        if (j === req.body.data[i].skills.length - 1) {
+                                                            res.send({message: 'Successful'});
+                                                        }
+                                                    })
                                                 })
+                                            })
+                                    }
+                                    else {
+                                        let skillUuid;
+                                        skillUuid = result[0].skill_uuid;
+                                        skillPosition = j + 1;
+                                        categoryPosition = i + 1;
+                                        db('profile_skills')
+                                            .insert({
+                                                'user_uuid': userUuid,
+                                                'category_position': categoryPosition,
+                                                'category_uuid': categoryUuid,
+                                                'skill_position': skillPosition,
+                                                'skill_uuid': skillUuid,
+                                                'skill_experience': req.body.data[i].skills[j].experience,
+                                                'skill_self_rating': req.body.data[i].skills[j].rating,
+                                                'skill_self_interest': req.body.data[i].skills[j].interest,
+                                                'skill_comment': req.body.data[i].skills[j].comment,
+                                                'created_at': moment().format(),
+                                                'updated_at': moment().format()
+                                            }).then(() => {
+                                            if (j === req.body.data[i].skills.length - 1) {
+                                                res.send({message: 'Successful'});
                                             }
                                         })
                                     }
+                                })
+                            }
 
-                                }
-                            })
-                        });
-                }
-                else {
-                    let categoryUuid;
-                    categoryUuid = result[0].category_uuid;
-                    for (let j = 0; j < req.body.data[i].skills.length; j++) {
-                        if (req.body.data[i].skills[j].skill === "" || req.body.data[i].skills[j].skill === null) {
-                            res.send({message: "Skill can not be empty"});
-                            break;
-                        } else {
-                            db('skills').select('skill_uuid').where({'skill_name': req.body.data[i].skills[j].skill}).then((result) => {
-                                if (result === "" || result.length === 0) {
-                                    db('skills')
-                                        .insert({
-                                            'skill_name': req.body.data[i].skills[j].skill,
-                                            'created_at': moment().format(),
-                                            'updated_at': moment().format(),
-                                            'status': 0,
-                                            'user_uuid': userUuid
-                                        })
-                                        .then(() => {
-                                            db('skills').select('skill_uuid').where({'skill_name': req.body.data[i].skills[j].skill}).then((result) => {
-                                                let skillUuid;
-                                                skillUuid = result[0].skill_uuid;
-                                                skillPosition = j + 1;
-                                                categoryPosition = i + 1;
-                                                db('profile_skills')
-                                                    .insert({
-                                                        'user_uuid': userUuid,
-                                                        'category_position': categoryPosition,
-                                                        'category_uuid': categoryUuid,
-                                                        'skill_position': skillPosition,
-                                                        'skill_uuid': skillUuid,
-                                                        'skill_experience': req.body.data[i].skills[j].experience,
-                                                        'skill_self_rating': req.body.data[i].skills[j].rating,
-                                                        'skill_self_interest': req.body.data[i].skills[j].interest,
-                                                        'skill_comment': req.body.data[i].skills[j].comment,
-                                                        'created_at': moment().format(),
-                                                        'updated_at': moment().format()
-                                                    }).then(() => {
-                                                    res.send({message: 'Successful'});
-                                                })
-                                            })
-                                        })
-                                }
-                                else {
-                                    let skillUuid;
-                                    skillUuid = result[0].skill_uuid;
-                                    skillPosition = j + 1;
-                                    categoryPosition = i + 1;
-                                    db('profile_skills')
-                                        .insert({
-                                            'user_uuid': userUuid,
-                                            'category_position': categoryPosition,
-                                            'category_uuid': categoryUuid,
-                                            'skill_position': skillPosition,
-                                            'skill_uuid': skillUuid,
-                                            'skill_experience': req.body.data[i].skills[j].experience,
-                                            'skill_self_rating': req.body.data[i].skills[j].rating,
-                                            'skill_self_interest': req.body.data[i].skills[j].interest,
-                                            'skill_comment': req.body.data[i].skills[j].comment,
-                                            'created_at': moment().format(),
-                                            'updated_at': moment().format()
-                                        }).then(() => {
-                                        res.send({message: 'Successful'});
-                                    })
-                                }
-                            })
                         }
-
                     }
-                }
 
-            });
+                });
+            })
         }
-
-
     }
 });
 

@@ -8,6 +8,7 @@ const URL = 'http://127.0.0.1:3000/getImage';
 const UPLOAD_IMAGE = 'http://127.0.0.1:3000/upload';
 const DISPLAY_IMAGE_URL = 'http://127.0.0.1:3000/';
 const REJECTION_REASON = 'http://127.0.0.1:3000/rejectionReason';
+const GET_PROFILE_INFORMATION = 'http://127.0.0.1:3000/getProfileInformation';
 const USER_IMAGE = 'userImage';
 const LOG_OUT = 'log out';
 const CHANGE_PASSWORD = 'ChangePassword';
@@ -19,7 +20,13 @@ class UsersImage extends Component {
             file: '',
             text: "test text",
             action: USER_IMAGE,
-            rejectionReason : ''
+            rejectionReason : '',
+            firstName : '',
+            lastName : '',
+            primaryEmail : '',
+            secondaryEmail : '',
+            primaryNumber : '',
+            secondaryName : ''
         };
         this.handleChange = this.handleChange.bind(this);
         this.uploadImage = this.uploadImage.bind(this);
@@ -68,6 +75,18 @@ class UsersImage extends Component {
                     })
                 })
             })
+        });
+        fetch(GET_PROFILE_INFORMATION).then((res)=>{
+            res.json().then((value)=>{
+                this.setState({
+                    firstName : value.firstName,
+                    lastName : value.lastName,
+                    primaryEmail : value.primaryEmail,
+                    secondaryEmail : value.secondaryEmail,
+                    primaryNumber : value.primaryNumber,
+                    secondaryName : value.secondaryNumber
+                })
+            })
         })
     }
 
@@ -103,6 +122,13 @@ class UsersImage extends Component {
                     <div className='row'>
                         <div className='col-md-4'>
                             <img src={this.state.displayImage} className='display-image'/>
+                        </div>
+                        <div className='col-md-8 mt-2'>
+                            <p>Name: {this.state.firstName + " " + this.state.lastName}</p>
+                            <p>Primary Email: {this.state.primaryEmail}</p>
+                            <p>Secondary Email: {this.state.secondaryEmail}</p>
+                            <p>Primary Number: {this.state.primaryNumber}</p>
+                            <p>Secondary Number: {this.state.secondaryNumber} </p>
                         </div>
                     </div>
                     <div className='row'>

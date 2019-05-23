@@ -58,7 +58,6 @@ router.post('/verificationEmail', jsonParser,(req, res)=>{
                 else {
                     code = req.session;
                     code = rand;
-                    console.log(code);
                     res.send({message : "Code Send"});
                 }
             })

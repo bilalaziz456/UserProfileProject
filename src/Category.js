@@ -5,7 +5,6 @@ const GET_CATEGORY = 'http://127.0.0.1:3000/getCategory';
 const SEND_DATA = 'http://127.0.0.1:3000/insertData';
 const JOB_TYPE = 'http://127.0.0.1:3000/jobType';
 const SEND_JOB_TYPE = 'http://127.0.0.1:3000/insertJobType';
-
 class Category extends Component {
     constructor(props) {
         super(props);
@@ -15,6 +14,9 @@ class Category extends Component {
             checkJobType : [],
             categoryOptions: [],
             message: '',
+            currentSalary : '',
+            expectedPerHour : '',
+            expectedSalary : '',
             data: [{
                 category: "",
                 label: "",
@@ -36,17 +38,23 @@ class Category extends Component {
         this.handleSkillIndexChangeUpward = this.handleSkillIndexChangeUpward.bind(this);
         this.handleSkillIndexChangeDownward = this.handleSkillIndexChangeDownward.bind(this);
         this.handleCheckBox = this.handleCheckBox.bind(this);
+        this.handleSalary = this.handleSalary.bind(this);
+    }
+    handleSalary(e){
+        this.setState({
+            [e.target.name] : e.target.value
+        })
     }
     handleCheckBox(e){
         let checkBox = this.state.checkJobType;
-
         if(e.target.checked){
             checkBox.push(this.state.jobTypeData[e.target.value].jobType);
             this.setState({
                 checkJobType : checkBox
             });
         } else {
-            checkBox.splice(e.target.value , 1);
+            let found = this.state.checkJobType.indexOf(this.state.jobTypeData[e.target.value].jobType);
+            checkBox.splice(found , 1);
             this.setState({
                 checkJobType : checkBox
             });
@@ -88,7 +96,10 @@ class Category extends Component {
             },
             method: 'POST',
             body: JSON.stringify({
-                data: this.state.data
+                data: this.state.data,
+                currentSalary : this.state.currentSalary,
+                expectedPerHour : this.state.expectedPerHour,
+                expectedSalary : this.state.expectedSalary
             })
         }).then((res) => {
             res.json().then((value) => {
@@ -224,6 +235,29 @@ class Category extends Component {
         return (
             <div>
                 {this.state.jobType}
+                <div className='row top'>
+                    <div className='col-md-4'>
+                        <div className='form-group'>
+                            <label htmlFor="currentSalary">Current Salary</label>
+                            <input type='number' className='form-control' id='currentSalary' name='currentSalary'
+                            onChange={this.handleSalary} required/>
+                        </div>
+                    </div>
+                    <div className='col-md-4'>
+                        <div className='form-group'>
+                            <label htmlFor="expectedPerHour">Expected Per Hour Salary</label>
+                            <input type='number' className='form-control' id='expectedPerHour' name='expectedPerHour'
+                                   onChange={this.handleSalary} required/>
+                        </div>
+                    </div>
+                    <div className='col-md-4'>
+                        <div className='form-group'>
+                            <label htmlFor="expectedSalary">Expected Salary</label>
+                            <input type='number' className='form-control' id='expectedSalary' name='expectedSalary'
+                                   onChange={this.handleSalary} required/>
+                        </div>
+                    </div>
+                </div>
                 <div className='top'>
                     <button type="submit" className="btn btn-primary" onClick={this.addCategory}>+Add
                         Category
