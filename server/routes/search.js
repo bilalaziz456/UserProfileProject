@@ -45,11 +45,11 @@ router.post('/search', jsonParser, (req, res) => {
             if (req.body.currentSalary !== '') {
                 query.andWhere({'users.current_salary': req.body.currentSalary})
             }
-            if (req.body.expectedPerHour !== '') {
-                query.andWhere({'users.expected_per_hour_salary': req.body.expectedPerHour})
+            if (req.body.minExpectedPerHour !== '' && req.body.maxExpectedPerHour !== '') {
+                query.whereBetween('users.expected_per_hour_salary', [req.body.minExpectedPerHour, req.body.maxExpectedPerHour])
             }
-            if (req.body.expectedSalary !== '') {
-                query.andWhere({'users.expected_salary': req.body.expectedSalary})
+            if (req.body.minExpectedSalary !== '' && req.body.maxExpectedSalary) {
+                query.whereBetween('users.expected_salary', [req.body.minExpectedSalary, req.body.maxExpectedSalary])
             }
             for (let i = 0; i < req.body.sendData.length; i++) {
                 let searchDataRow = req.body.sendData[i];

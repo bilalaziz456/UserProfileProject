@@ -34,8 +34,10 @@ class SearchUsers extends Component {
             country : '',
             city : '',
             currentSalary : '',
-            expectedPerHour : '',
-            expectedSalary : '',
+            minExpectedPerHour : '',
+            maxExpectedPerHour : '',
+            maxExpectedSalary : '',
+            minExpectedSalary : '',
             bool: false
         };
         this.handleChange = this.handleChange.bind(this);
@@ -135,51 +137,67 @@ class SearchUsers extends Component {
 
     }
     search(e) {
-        fetch(SEARCH, {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*'
-            },
-            method: 'POST',
-            body: JSON.stringify({
-                jobType : this.state.checkedJobType,
-                currentSalary : this.state.currentSalary,
-                expectedPerHour : this.state.expectedPerHour,
-                expectedSalary : this.state.expectedSalary,
-                country : this.state.country,
-                city : this.state.city,
-                sendData : this.state.sendData
+        if(this.state.minExpectedPerHour > this.state.maxExpectedPerHour){
+            this.setState({
+                bool: false,
+                message : 'Min expected salary per hour can not be greater then max expected salary per hour'
             })
-        }).then((res) => {
-            res.json().then((result) => {
-                if (result.message) {
-                    this.setState({
-                        bool: false,
-                        message: result.message
+        } else {
+            if(this.state.minExpectedSalary > this.state.maxExpectedSalary){
+                this.setState({
+                    bool: false,
+                    message : 'Min expected salary can not be greater then max expected salary'
+                })
+            } else {
+                fetch(SEARCH, {
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': '*'
+                    },
+                    method: 'POST',
+                    body: JSON.stringify({
+                        jobType : this.state.checkedJobType,
+                        currentSalary : this.state.currentSalary,
+                        minExpectedPerHour : this.state.minExpectedPerHour,
+                        maxExpectedPerHour : this.state.maxExpectedPerHour,
+                        maxExpectedSalary : this.state.maxExpectedSalary,
+                        minExpectedSalary : this.state.minExpectedSalary,
+                        country : this.state.country,
+                        city : this.state.city,
+                        sendData : this.state.sendData
                     })
-                } else {
+                }).then((res) => {
+                    res.json().then((result) => {
+                        if (result.message) {
+                            this.setState({
+                                bool: false,
+                                message: result.message
+                            })
+                        } else {
 
-                    this.setState({
-                        bool: true,
-                        data: result.map((value, index) => {
-                            return (
-                                <tr key={index}>
-                                    <td>
-                                        <img src={GET_IMAGE_PATH + value.image_path}/>
-                                    </td>
-                                    <td>
-                                        <a href={'/p/' + value.user_uuid}
-                                           target="_blank">{value.first_name + ' ' + value.last_name}</a>
-                                    </td>
-                                    <td>{value.login_id}</td>
-                                </tr>
-                            )
-                        })
+                            this.setState({
+                                bool: true,
+                                data: result.map((value, index) => {
+                                    return (
+                                        <tr key={index}>
+                                            <td>
+                                                <img src={GET_IMAGE_PATH + value.image_path}/>
+                                            </td>
+                                            <td>
+                                                <a href={'/p/' + value.user_uuid}
+                                                   target="_blank">{value.first_name + ' ' + value.last_name}</a>
+                                            </td>
+                                            <td>{value.login_id}</td>
+                                        </tr>
+                                    )
+                                })
+                            })
+                        }
                     })
-                }
-            })
-        });
+                });
+            }
+        }
         e.preventDefault()
     }
 
@@ -232,18 +250,33 @@ class SearchUsers extends Component {
                                        onChange={this.handleSalary} required/>
                             </div>
                         </div>
-                        <div className='col-md-4'>
+                    </div>
+                    <div className='row top'>
+                        <div className='col-md-6'>
                             <div className='form-group'>
                                 <label htmlFor="expectedPerHour">Expected Per Hour Salary</label>
-                                <input type='number' className='form-control' id='expectedPerHour' name='expectedPerHour'
-                                       onChange={this.handleSalary} required/>
+                                <div className="form-inline ">
+                                    <label htmlFor='min' className="mr-sm-2">Min: </label>
+                                    <input type='number' className='form-control mb-2 mr-sm-2' id='min' name='minExpectedPerHour'
+                                           onChange={this.handleSalary} min="1" max="160" required/>
+                                    <label htmlFor='max' className="mr-sm-2">Max: </label>
+                                    <input type='number' className='form-control mb-2 mr-sm-2' id='max' name='maxExpectedPerHour'
+                                           onChange={this.handleSalary} min="1" max="160" required/>
+                                </div>
+
                             </div>
                         </div>
-                        <div className='col-md-4'>
+                        <div className='col-md-6'>
                             <div className='form-group'>
-                                <label htmlFor="expectedSalary">Expected Salary</label>
-                                <input type='number' className='form-control' id='expectedSalary' name='expectedSalary'
-                                       onChange={this.handleSalary} required/>
+                                <label >Expected Salary</label>
+                                <div className="form-inline ">
+                                    <label htmlFor='minExpectedSalary' className="mr-sm-2">Min: </label>
+                                    <input type='number' className='form-control mb-2 mr-sm-2' id='minExpectedSalary' name='minExpectedSalary'
+                                           onChange={this.handleSalary} min="160" max="1600000" required/>
+                                    <label htmlFor='maxExpectedSalary' className="mr-sm-2">Max: </label>
+                                    <input type='number' className='form-control mb-2 mr-sm-2' min="160" max="1600000" id='maxExpectedSalary' name='maxExpectedSalary'
+                                           onChange={this.handleSalary} required/>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -316,18 +349,33 @@ class SearchUsers extends Component {
                                        onChange={this.handleSalary} required/>
                             </div>
                         </div>
-                        <div className='col-md-4'>
+                    </div>
+                    <div className='row top'>
+                        <div className='col-md-6'>
                             <div className='form-group'>
-                                <label htmlFor="expectedPerHour">Expected Per Hour Salary</label>
-                                <input type='number' className='form-control' id='expectedPerHour' name='expectedPerHour'
-                                       onChange={this.handleSalary} required/>
+                                <label>Expected Per Hour Salary</label>
+                                <div className="form-inline ">
+                                    <label htmlFor='min' className="mr-sm-2">Min: </label>
+                                    <input type='number' className='form-control mb-2 mr-sm-2' id='min' name='minExpectedPerHour'
+                                           onChange={this.handleSalary} min="1" max="160" required/>
+                                    <label htmlFor='max' className="mr-sm-2">Max: </label>
+                                    <input type='number' className='form-control mb-2 mr-sm-2' id='max' name='maxExpectedPerHour'
+                                           onChange={this.handleSalary} min="1" max="160" required/>
+                                </div>
+
                             </div>
                         </div>
-                        <div className='col-md-4'>
+                        <div className='col-md-6'>
                             <div className='form-group'>
-                                <label htmlFor="expectedSalary">Expected Salary</label>
-                                <input type='number' className='form-control' id='expectedSalary' name='expectedSalary'
-                                       onChange={this.handleSalary} required/>
+                                <label >Expected Salary</label>
+                                <div className="form-inline ">
+                                    <label htmlFor='minExpectedSalary' className="mr-sm-2">Min: </label>
+                                    <input type='number' className='form-control mb-2 mr-sm-2' id='minExpectedSalary' name='minExpectedSalary'
+                                           onChange={this.handleSalary} min="160" max="1600000" required/>
+                                    <label htmlFor='maxExpectedSalary' className="mr-sm-2">Max: </label>
+                                    <input type='number' className='form-control mb-2 mr-sm-2' min="160" max="1600000" id='maxExpectedSalary' name='maxExpectedSalary'
+                                           onChange={this.handleSalary} required/>
+                                </div>
                             </div>
                         </div>
                     </div>
